@@ -17,12 +17,36 @@ MongoClient.connect(
    { useNewUrlParser: true },
    (error, client) => {
       if (error) {
-         return console.log("Unable to conect to database");
+         return console.log("Unable to connect to database");
       }
 
       const db = client.db(databaseName);
-
       console.log("connected");
+
+      db.collection('tasks').updateMany({
+        completed: false
+      }, {
+        $set: {
+            completed: true
+        }
+      }).then((result) => {
+        console.log(result.modifiedCount)
+      }).catch((e) => {
+        console.log(e)
+      })
+
+
+
+   }
+);
+
+
+
+
+
+
+
+//FIND AND FINDONE
 
     //   db.collection('users').findOne({ _id: ObjectId("6303c84995c9b759747fefd2") }, (err, user) => {
     //     if(err){
@@ -45,24 +69,58 @@ MongoClient.connect(
     //     console.log(count)
     // })
 
-    db.collection('tasks').findOne({ _id: ObjectId("630123b15139323d64825ae4") }, (err, task) => {
-        if(err){
-            console.log('Whoops')
-        } else {
-            console.log(task)
-        }
-    })
+    // db.collection('tasks').findOne({ _id: ObjectId("630123b15139323d64825ae4") }, (err, task) => {
+    //     if(err){
+    //         console.log('Whoops')
+    //     } else {
+    //         console.log(task)
+    //     }
+    // })
 
-    db.collection('tasks').find({ completed: true}).toArray((error, tasks) => {
-        console.log(tasks)
-    })
-
-   }
-);
+    // db.collection('tasks').find({ completed: true}).toArray((error, tasks) => {
+    //     console.log(tasks)
+    // })
 
 
 
-// INSERT THREE TASKS INTO A NEW TASKS COLLECTION
-// description (string), completed (boolean)
-// callback to handle error or print ops property
+
+    // INSERT ONE
+    // db.collection('users').insertOne({ name: "Clark", age: 35}, (err, result) => {
+    //     if(err){
+    //         console.log('there was an error')
+    //     } else {
+    //         console.log(result.ops)
+    //     }
+    //   })
+
+
+    //UPDATE ONE
+    // const updatePromise = db.collection('users').updateOne({
+    //     _id: ObjectId("6304f9d02b84170fe0cbf6ff")
+    //   }, {
+    //     $set: {
+    //         name: 'Newer New Name'
+    //     }
+    //   })
+
+    //   updatePromise.then((result) => {
+    //     console.log(result.ops)
+    //   }).catch((e) => {
+    //     console.log(e)
+    //   })
+
+    // OR CHAIN THEM TOGETHER WITHOUT CREATING VARIABLE
+    // db.collection('users').updateOne({
+    //     _id: ObjectId("6304f9d02b84170fe0cbf6ff")
+    //   }, {
+    //     $set: {
+    //         age: 666
+    //     }
+    //   }).then((result) => {
+    //     console.log(result)
+    //   }).catch((e) => {
+    //     console.log(e)
+    //   })
+
+
 
