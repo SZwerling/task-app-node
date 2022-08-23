@@ -3,7 +3,7 @@
 // const MongoClient = mongodb.MongoClient;
 // const ObjectID = mongodb.ObjectId
 
-const { MongoClient, ObjectId } = require("mongodb")
+const { MongoClient, ObjectId, Db } = require("mongodb")
 
 const connectionURL = "mongodb://127.0.0.1:27017";
 const databaseName = "task-manager";
@@ -21,20 +21,25 @@ MongoClient.connect(
       }
 
       const db = client.db(databaseName);
-      console.log("connected");
+    console.log("connected");
 
-      db.collection('tasks').updateMany({
-        completed: false
-      }, {
-        $set: {
-            completed: true
-        }
-      }).then((result) => {
-        console.log(result.modifiedCount)
-      }).catch((e) => {
-        console.log(e)
-      })
+    // db.collection('users').deleteMany({
+    //     age: 132
+    // }).then((result) => {
+    //     console.log(result)
+    // }).catch((err) => {
+    //     console.log("There was an error.")
+    // })
 
+    db.collection('tasks').deleteOne({
+        task: 'clean garage'
+    }).then((result) => {
+        console.log(result)
+    }).catch((error) => {
+        console.log("there was an error")
+    })
+
+      
 
 
    }
@@ -121,6 +126,22 @@ MongoClient.connect(
     //   }).catch((e) => {
     //     console.log(e)
     //   })
+
+    //UPDATE MANY
+    
+
+    // db.collection('tasks').updateMany({
+    //   completed: false
+    // }, {
+    //   $set: {
+    //       completed: true
+    //   }
+    // }).then((result) => {
+    //   console.log(result.modifiedCount)
+    // }).catch((e) => {
+    //   console.log(e)
+    // })
+
 
 
 
