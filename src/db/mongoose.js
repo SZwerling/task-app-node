@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
 
 const connectionURL = "mongodb://127.0.0.1:27017";
 const databaseName = "task-manager-api";
@@ -6,10 +7,29 @@ mongoose.connect(connectionURL + '/' + databaseName)
 
 const User = mongoose.model('User', {
     name: {
-        type: String
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error('Email is invalid')
+            }
+        }
     },
     age: {
-        type: Number
+        type: Number,
+        default: 0,
+        validate(value){
+            if(value < 0){
+                throw new Error('Must be 18 or over.')
+            }
+        }
     }
 })
 
@@ -28,18 +48,19 @@ const newTask = new Task({
 })
 
 const me = new User({
-    name: 'Juanito',
-    age: 33
+    name: 'Johnny ',
+    email: 'tFADart@gmail.com',
+    // age: 
 })
 
-newTask.save().then(() => {
-    console.log(newTask)
-}).catch((error) => {
-    console.log(error)
-})
-
-// me.save().then(() => {  // we could put the me in the .then callback, but we already have access to it.
-//     console.log(me)
+// newTask.save().then(() => {
+//     console.log(newTask)
 // }).catch((error) => {
-//     console.log('error', error)
+//     console.log(error)
 // })
+
+me.save().then(() => {  // we could put the me in the .then callback, but we already have access to it.
+    console.log(me)
+}).catch((error) => {
+    console.log('error', error)
+})
