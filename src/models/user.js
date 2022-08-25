@@ -40,17 +40,7 @@ const User = mongoose.model('User', {
     }
 })
 
-const Task = mongoose.model('Task', {
-    task: {
-        type: String,
-        trim: true,
-        required: true
-    },
-    completed: {
-        type: Boolean,
-        default: false
-    }
-})
+
 
 
 module.exports = User;

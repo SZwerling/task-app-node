@@ -7,10 +7,6 @@ mongoose.connect(connectionURL + '/' + databaseName)
 
 
 
-// const newTask = new Task({
-//     task: ' sleep around ',
-//     completed: false
-// })
 
 
 //      THIS LOGIC MOVED TO INDEX.JS WITH CONST USER = NEW USER(REQ.BODY)
