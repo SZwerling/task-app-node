@@ -19,20 +19,20 @@ app.listen(port, () => {
 });
 
 
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 
-const myFunction = async () => {
-   const password = "red12345!"
-   const hashed = await bcrypt.hash(password, 8)
+// const myFunction = async () => {
+//    const password = "red12345!"
+//    const hashed = await bcrypt.hash(password, 8)
    
-   console.log(password)
-   console.log(hashed)
+//    console.log(password)
+//    console.log(hashed)
 
-   const isMatch = await bcrypt.compare('red12345!', hashed)
-   console.log(isMatch)
-}
+//    const isMatch = await bcrypt.compare('red12345!', hashed)
+//    console.log(isMatch)
+// }
 
-myFunction()
+// myFunction()
 
 
 // THIS IS THE CODE BEFORE ASYNC REFACTOR // (req, res) IS THE START OF THE FUNCTION THAT GETS PASSED TO EXPRESS VIA APP.POST
