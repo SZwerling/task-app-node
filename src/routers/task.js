@@ -43,10 +43,17 @@ router.post("/tasks", async (req, res) => {
     if(!isValid){
        return res.status(400).send({ error: 'Invalid Updates!' })
     }
- 
+ //if we use findByIdAndUpdate, that bypasses possibility of using mongoose middleware
+ //that middleware would go in the task model with .pre('save')
+ //so we can use that middleware here because we have task.save()
     try {
-       const task = await Task.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true }) 
-       if(!task){                                //find by id   //update info  //send back updated user //run validators on update info
+      const task = await Task.findById(_id)
+      updates.forEach((update) => {
+         task[update] = req.body[update]
+      })
+      await task.save()
+
+       if(!task){                                
           return res.status(404).send()
        }
        res.send(task)
