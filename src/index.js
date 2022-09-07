@@ -14,13 +14,25 @@ app.use(taskRouter)
 
 
 
-
-
 app.listen(port, () => {
    console.log(`App is up on port ${port}`);
 });
 
 
+const bcrypt = require('bcrypt')
+
+const myFunction = async () => {
+   const password = "red12345!"
+   const hashed = await bcrypt.hash(password, 8)
+   
+   console.log(password)
+   console.log(hashed)
+
+   const isMatch = await bcrypt.compare('red12345!', hashed)
+   console.log(isMatch)
+}
+
+myFunction()
 
 
 // THIS IS THE CODE BEFORE ASYNC REFACTOR // (req, res) IS THE START OF THE FUNCTION THAT GETS PASSED TO EXPRESS VIA APP.POST
