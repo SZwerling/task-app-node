@@ -40,7 +40,13 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Must be 18 or over.')
             }
         }
-    }
+    },
+    tokens: [{
+        token:  {
+            type: String,
+            required: true
+        }
+    }]
 })
 
 
@@ -50,6 +56,8 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.generateAuthToken = async function() {
     const user = this // this is the instance 
     const token = jwt.sign({_id: user.id.toString()}, 'thisismynewcourse')
+    user.tokens = user.tokens.concat({ token: token })
+    await user.save()
     return token;
 }
 
