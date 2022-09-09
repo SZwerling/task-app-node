@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -42,9 +43,19 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+
+//static methods available on the model, sometimes called model methods
+// .methods availbe on the instance, sometimes called instance methods
+// method on User to match password and email for login
+userSchema.methods.generateAuthToken = async function() {
+    const user = this // this is the instance 
+    const token = jwt.sign({_id: user.id.toString()}, 'thisismynewcourse')
+    return token;
+}
+
+//static methods available on the model// .methods availbe on instance
 // method on User to match password and email for login
 userSchema.statics.findByCredentials = async (email, password) => {
-
     const user = await User.findOne({ email: email})
     if(!user){
         throw new Error('Unable to log in.')
