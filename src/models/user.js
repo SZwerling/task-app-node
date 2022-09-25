@@ -51,7 +51,15 @@ const userSchema = new mongoose.Schema({
 
 
 //static methods available on the model, sometimes called model methods
-// .methods availbe on the instance, sometimes called instance methods
+// .methods available on the instance, sometimes called instance methods
+userSchema.methods.toJSON = function() {
+    const user = this
+    const userObject = user.toObject()
+    delete userObject.password
+    delete userObject.tokens
+    return userObject
+}
+
 // method on User to match password and email for login
 userSchema.methods.generateAuthToken = async function() {
     const user = this // this is the instance 
