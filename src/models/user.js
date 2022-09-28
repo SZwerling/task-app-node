@@ -49,6 +49,13 @@ const userSchema = new mongoose.Schema({
     }]
 })
 
+userSchema.virtual('tasks', {
+    ref: 'Task',
+    localField: '_id',
+    foreignField: 'owner'
+})  
+
+
 
 //static methods available on the model, sometimes called model methods
 // .methods available on the instance, sometimes called instance methods

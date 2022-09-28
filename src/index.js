@@ -35,6 +35,26 @@ app.listen(port, () => {
    console.log(`App is up on port ${port}`);
 });
 
+const Task = require('./models/task')
+const User = require('./models/user')
+
+const main = async () => {
+   // const task = await Task.findById('6333d202f9ee7953dd011f4c')
+   // await task.populate('owner')
+   // console.log(task.owner)
+
+   const user = await User.findById('6333d0ca01e2c48f293f17ad')
+   await user.populate('tasks')
+   console.log(user.tasks)
+
+}
+
+main()
+
+
+// "email": "sazwerling@gmail.com",
+// "password": "red123456!"
+
 
 
 // const jwt = require('jsonwebtoken')
